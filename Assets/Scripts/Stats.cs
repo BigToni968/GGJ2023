@@ -2,27 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[Serializable]
-public class Stats
+public abstract class Stats
 {
-    [SerializeField] private float _health;
-    [SerializeField] private float _speed;
-    [SerializeField] private float _damage;
-    [SerializeField] private float _range;
-
-    public SetStat Health { get; private set; }
-    public SetStat Speed { get; private set; }
-    public SetStat Damage { get; private set; }
-    public SetStat Range { get; private set; }
-
-    public void Init()
-    {
-        Health = new SetStat(new Stat(_health));
-        Speed = new SetStat(new Stat(_speed));
-        Damage = new SetStat(new Stat(_damage));
-        Range = new SetStat(new Stat(_range));
-    }
-
+    public virtual bool IsAlive { get; private set; } = true;
+    public virtual void Init() { }
 }
 
 public class SetStat
@@ -77,8 +60,8 @@ public class Stat
 
     public Stat(float value, float max)
     {
-        Value = value;
         Max = max;
+        Value = value;
     }
 
     private void ReValue(float value)
