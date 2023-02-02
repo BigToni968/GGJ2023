@@ -2,12 +2,18 @@ using RootManData = Game.Data.RootMan;
 using UnityEngine;
 using System;
 
-public class RootMan : MonoEntity, IMove, IRotate
+public class RootMan : MonoEntity, IMove, IRotate, ISkullAttack, IUniqueAttack, IDamage
 {
     [SerializeField] private SpriteRenderer _sprite;
 
     public event Action<Vector2> To;
     public event Action<Vector2> Side;
+    public event Action<RootManData> Skull;
+    public event Action<Skills.SetSkills> Unique;
+
+    public Vector2 Direction { get; private set; } = Vector2.right;
+
+    public MonoEntity Owner => this;
 
     private RootManData _data;
 
@@ -18,20 +24,14 @@ public class RootMan : MonoEntity, IMove, IRotate
         _data = gameEntity as RootManData;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (_data.Parammeters.IsAlive)
         {
             Move();
 
-            if (Input.GetMouseButton(0))
-            {
-                foreach (Skills.SetSkills setSkill in _data.Skills.Get)
-                {
-                    setSkill.Skill.Execute();
-                    return;
-                }
-            }
+            if (Input.GetMouseButtonDown(0)) Unique?.Invoke(_data.Attack);
+            if (Input.GetMouseButtonDown(1)) Skull?.Invoke(_data);
         }
     }
 
@@ -44,6 +44,15 @@ public class RootMan : MonoEntity, IMove, IRotate
         To?.Invoke(direction);
 
         if (direction.x != 0f)
-            Side?.Invoke(direction.x < 0f ? Vector2.left : Vector2.right);
+        {
+            Direction = direction.x < 0f ? Vector2.left : Vector2.right;
+            Side?.Invoke(Direction);
+        }
+    }
+
+    public int Get(float Damage)
+    {
+        _data.Parammeters.Health.Add(new Stat(-Damage));
+        return 0;
     }
 }

@@ -18,8 +18,14 @@ MonoBehaviour:
     _score: 0
     _health: 100
     _speed: 10
+  _attack:
+    _skill: {fileID: 11400000, guid: 4c68d85316c604f4aa4bd58c387fa970, type: 2}
+    _count: 999
+    _max: 999
+    _delay: 2
   _skills:
     _skills:
     - _skill: {fileID: 11400000, guid: 7b63032b19534254dad1626d9a92d2a4, type: 2}
       _count: 5
       _max: 5
+      _delay: 3

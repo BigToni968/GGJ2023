@@ -6,10 +6,13 @@ namespace Game.Data
     public class RootMan : GameEntity
     {
         [SerializeField] private Parameters _parameters;
+        [SerializeField] private Skills.SetSkills _attack;
         [SerializeField] private Skills _skills;
 
         public Parameters Parammeters => _parameters;
         public Skills Skills => _skills;
+
+        public Skills.SetSkills Attack => _attack;
 
         [System.Serializable]
         public class Parameters : Stats
@@ -38,6 +41,7 @@ namespace Game.Data
             base.Init();
             Parammeters.Init();
             _skills.Init(Owner);
+            _attack.Init(Owner);
         }
     }
 }
