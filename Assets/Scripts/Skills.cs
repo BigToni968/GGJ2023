@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using Game.Data;
@@ -6,10 +7,31 @@ using System;
 [Serializable]
 public class Skills
 {
-    [SerializeField] private SetSkills[] _skills;
+    [SerializeField] private List<SetSkills> _skills;
 
-    public int Count => _skills.Length;
+    public event Action<SetSkills> Update;
+    public int Count => _skills.Count;
+
     public IEnumerable Get => _skills;
+
+    public void Add(SetSkills setSkills)
+    {
+        if (_skills.Contains(setSkills))
+        {
+            SetSkills skills = _skills.Find(x => setSkills == x);
+            skills.SetSkill.Value = +1;
+            return;
+        }
+
+        _skills.Add(setSkills);
+        Update?.Invoke(setSkills);
+    }
+
+    public void Add(SetSkills[] setSkills)
+    {
+        foreach (SetSkills setSkillsTemp in setSkills)
+            Add(setSkillsTemp);
+    }
 
     public SetSkill SelectSkill { get; private set; }
 
@@ -21,7 +43,7 @@ public class Skills
 
     public SetSkill Select(int number)
     {
-        if (_skills.Length >= number) return null;
+        if (_skills.Count >= number) return null;
 
         SelectSkill = _skills[number].SetSkill;
 
@@ -38,7 +60,7 @@ public class Skills
     }
 
     [Serializable]
-    public class SetSkills
+    public class SetSkills : ICloneable
     {
         [SerializeField] private Skill _skill;
         [SerializeField] private int _count;
@@ -47,14 +69,19 @@ public class Skills
 
         public SetSkill SetSkill { get; private set; }
 
+
         public void Init(MonoEntity owner)
         {
             _skill.Owner = owner;
             SetSkill = new SetSkill(_skill, _count, _max, _delay);
         }
+        public object Clone() => this;
+
+
     }
 }
 
+[Serializable]
 public class SetSkill
 {
     public event Action<int> Count;

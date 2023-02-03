@@ -30,6 +30,7 @@ namespace Game.View
                 button.Click -= SelectSkullCharacter;
 
             _buttons.Clear();
+            _hero.Skills.Update -= UpdateSkillsHero;
         }
 
         public void Init()
@@ -39,6 +40,8 @@ namespace Game.View
             foreach (GameEntity entity in _preLoader.GetGameEntity)
                 if (entity.GEType == GEType.Hero) _hero = entity as Data.RootMan;
 
+            _hero.Skills.Update += UpdateSkillsHero;
+
             for (int i = 0; i < _countButton; i++)
             {
                 SkullButton button = Instantiate(_prefab, transform);
@@ -47,14 +50,30 @@ namespace Game.View
                 foreach (Skills.SetSkills setSkill in _hero.Skills.Get)
                 {
                     if (i == j)
-                    {
-                        _buttons.Add(button);
                         button.Init(_hero, setSkill.SetSkill.Skill);
-                    }
+
                     j++;
                 }
 
+                _buttons.Add(button);
                 button.Click += SelectSkullCharacter;
+            }
+        }
+
+        private void UpdateSkillsHero(Skills.SetSkills setSkills)
+        {
+            int i = 0;
+            foreach (SkullButton button in _buttons)
+            {
+                int j = 0;
+
+                foreach (Skills.SetSkills setSkill in _hero.Skills.Get)
+                {
+                    if (i == j)
+                        button.Init(_hero, setSkills.SetSkill.Skill);
+                    j++;
+                }
+                i++;
             }
         }
 

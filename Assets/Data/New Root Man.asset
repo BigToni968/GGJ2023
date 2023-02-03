@@ -24,8 +24,4 @@ MonoBehaviour:
     _max: 999
     _delay: 2
   _skills:
-    _skills:
-    - _skill: {fileID: 11400000, guid: 7b63032b19534254dad1626d9a92d2a4, type: 2}
-      _count: 5
-      _max: 5
-      _delay: 3
+    _skills: []
