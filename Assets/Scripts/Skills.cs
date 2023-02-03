@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using Game.Data;
@@ -6,9 +7,31 @@ using System;
 [Serializable]
 public class Skills
 {
-    [SerializeField] private SetSkills[] _skills;
+    [SerializeField] private List<SetSkills> _skills;
+
+    public event Action<SetSkills> Update;
+    public int Count => _skills.Count;
 
     public IEnumerable Get => _skills;
+
+    public void Add(SetSkills setSkills)
+    {
+        if (_skills.Contains(setSkills))
+        {
+            SetSkills skills = _skills.Find(x => setSkills == x);
+            skills.SetSkill.Value = +1;
+            return;
+        }
+
+        _skills.Add(setSkills);
+        Update?.Invoke(setSkills);
+    }
+
+    public void Add(SetSkills[] setSkills)
+    {
+        foreach (SetSkills setSkillsTemp in setSkills)
+            Add(setSkillsTemp);
+    }
 
     public SetSkill SelectSkill { get; private set; }
 
@@ -18,30 +41,47 @@ public class Skills
             setSkill.Init(owner);
     }
 
-    public void Select(int number)
+    public SetSkill Select(int number)
     {
-        if (_skills.Length >= number) return;
+        if (_skills.Count >= number) return null;
 
-        SelectSkill = _skills[number].Skill;
+        SelectSkill = _skills[number].SetSkill;
+
+        return SelectSkill;
+    }
+
+    public SetSkill Select(Type type)
+    {
+        foreach (SetSkills setSkills in _skills)
+            if (setSkills.SetSkill.Skill.GetType() == type)
+                SelectSkill = setSkills.SetSkill;
+
+        return SelectSkill;
     }
 
     [Serializable]
-    public class SetSkills
+    public class SetSkills : ICloneable
     {
         [SerializeField] private Skill _skill;
         [SerializeField] private int _count;
         [SerializeField] private int _max;
+        [SerializeField] private float _delay;
 
-        public SetSkill Skill { get; private set; }
+        public SetSkill SetSkill { get; private set; }
+
 
         public void Init(MonoEntity owner)
         {
             _skill.Owner = owner;
-            Skill = new SetSkill(_skill, _count, _max);
+            SetSkill = new SetSkill(_skill, _count, _max, _delay);
         }
+        public object Clone() => this;
+
+
     }
 }
 
+[Serializable]
 public class SetSkill
 {
     public event Action<int> Count;
@@ -49,6 +89,8 @@ public class SetSkill
     private int _value;
     public int Value { get => _value; set => ReValue(value); }
     public int Max { get; private set; }
+    public float Delay { get; private set; }
+    public Skill Skill => _skill;
 
     private Skill _skill;
 
@@ -60,22 +102,26 @@ public class SetSkill
 
     public SetSkill(Skill skill, int value) : this(skill, value, value) { }
 
-    public SetSkill(Skill skill, int value, int max)
+    public SetSkill(Skill skill, int value, int max) : this(skill, value, max, 1f) { }
+
+    public SetSkill(Skill skill, int value, int max, float delay)
     {
         _skill = skill;
         Max = max;
         Value = value;
+        Delay = delay;
     }
 
     public void Execute()
     {
         if (Value == 0) return;
-
         Value = -1;
 
         ShellSkill shell = new GameObject().AddComponent<ShellSkill>();
+        shell.name = _skill.Name;
 
         Skill skill = GameObject.Instantiate(_skill);
+        skill.BaseSkill.Sprite = skill.Sprite;
         skill.BaseSkill.Owner = _skill.Owner;
         skill.BaseSkill.Body = shell.gameObject;
         skill.BaseSkill.Stats = FindStats(_skill);
@@ -88,7 +134,6 @@ public class SetSkill
 
 
         shell.Init(skill.Self);
-
     }
 
     private Stats FindStats(Skill skill)
@@ -96,6 +141,7 @@ public class SetSkill
         return skill switch
         {
             Whiplash whiplash => whiplash.Parammeters,
+            StarFly starFly => starFly.Parammeters,
             _ => null
         };
     }
@@ -122,6 +168,7 @@ public abstract class BaseSkill : ISkill
     public GameObject Body { get; set; }
     public Stats Stats { get; set; }
     public MonoEntity Owner { get; set; }
+    public Sprite Sprite { get; set; }
 
     public virtual void Init() => InitCallback?.Invoke();
     public virtual void Destroy() => DestroyCallbeck?.Invoke();

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2f99bb38b167e459568be475c6a723, type: 3}
+  m_Name: BasicEnemy
+  m_EditorClassIdentifier: 
+  monoEntity: {fileID: 5182340569707838330, guid: 52397dc8b4723a94996a21486be8274c, type: 3}
+  gameEntity: {fileID: 11400000, guid: c572ab7ef30bdaa4eb28882ac574e8bf, type: 2}
+  count: 10

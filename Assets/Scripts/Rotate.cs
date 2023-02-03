@@ -36,4 +36,5 @@ public class Rotate : MonoBehaviour
 public interface IRotate
 {
     public event Action<Vector2> Side;
+    public Vector2 Direction { get; }
 }

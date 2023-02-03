@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class Movaeble : MonoBehaviour
+public class Moveable : MonoBehaviour
 {
     [SerializeField] private MonoEntity _monoEntity;
     [SerializeField] private Rigidbody2D _rb;
