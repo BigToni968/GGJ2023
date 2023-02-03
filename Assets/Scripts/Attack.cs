@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using System;
@@ -7,16 +8,19 @@ namespace Game.Gameplay
     public class Attack : MonoBehaviour
     {
         [SerializeField] private MonoEntity _mono;
+        [SerializeField] private int _countActiveSkill;
 
         private IBaseAttack _attack;
         private ISkullAttack _skull;
         private IUniqueAttack _unique;
 
-        private SetSkill _activeSkull;
+        private List<Data.Skill> _listActiveSkill;
         private SetSkill _activeUnique;
 
         private void OnEnable()
         {
+            _listActiveSkill ??= new List<Data.Skill>(_countActiveSkill);
+
             _attack ??= _mono.GetComponent<IBaseAttack>();
             _skull ??= _mono.GetComponent<ISkullAttack>();
             _unique ??= _mono.GetComponent<IUniqueAttack>();
@@ -47,17 +51,19 @@ namespace Game.Gameplay
 
         private void Skull(Data.RootMan man)
         {
-            if (_activeSkull != null || man.Skills.SelectSkill == null) return;
+            if (_listActiveSkill.Count == _countActiveSkill || man.Skills.SelectSkill == null) return;
+            if (_listActiveSkill.Contains(man.Skills.SelectSkill.Skill)) return;
 
-            _activeSkull = man.Skills.SelectSkill;
-            SkullExecute();
+            SkullExecute(man.Skills.SelectSkill);
         }
 
-        private async void SkullExecute()
+        private async void SkullExecute(SetSkill setSkill)
         {
-            _activeSkull.Execute();
-            await Task.Delay(Convert.ToInt32(1000 * _activeSkull.Delay));
-            _activeSkull = null;
+            _listActiveSkill.Add(setSkill.Skill);
+            setSkill.Execute();
+            int delay = Convert.ToInt32(1000 * setSkill.Delay);
+            await Task.Delay(delay);
+            _listActiveSkill.Remove(setSkill.Skill);
         }
 
 

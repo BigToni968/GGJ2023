@@ -311,6 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mono: {fileID: 256660046}
+  _countActiveSkill: 4
 --- !u!1 &287781213
 GameObject:
   m_ObjectHideFlags: 0

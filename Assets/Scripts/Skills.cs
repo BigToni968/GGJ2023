@@ -50,7 +50,7 @@ public class Skills
         public void Init(MonoEntity owner)
         {
             _skill.Owner = owner;
-            SetSkill = new SetSkill(_skill, _count, _max);
+            SetSkill = new SetSkill(_skill, _count, _max, _delay);
         }
     }
 }
