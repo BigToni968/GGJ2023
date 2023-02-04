@@ -54,7 +54,7 @@ public class RootMan : MonoEntity, IMove, IRotate, ISkullAttack, IUniqueAttack, 
 
     public int Get(float Damage)
     {
-        _data.Parammeters.Health.Add(new Stat(-Damage));
+        _data.Parammeters.Health.Value = -Damage;
         return 0;
     }
 }

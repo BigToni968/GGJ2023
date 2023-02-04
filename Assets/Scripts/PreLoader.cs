@@ -26,8 +26,7 @@ public class PreLoader : MonoBehaviour
     {
         if (_data.GameEntities.Count == 0)
         {
-            foreach (GameEntity gameEntity in EntityInit(_gameEntity, _entities))
-                _data.GameEntities.Add(gameEntity);
+            EntityInit(_gameEntity, _entities);
         }
         else
         {
@@ -61,8 +60,11 @@ public class PreLoader : MonoBehaviour
 
         dublicategameEntity.Owner = monoEntity;
         dublicategameEntity.Init();
+        Game.Data.RootMan hero = dublicategameEntity as Game.Data.RootMan;
+        hero.Parammeters.Score.Value = -hero.Parammeters.Score.Value;
+        hero.Parammeters.Score.Value = -_data.Score;
         monoEntity.Init(dublicategameEntity);
-
+        _data.GameEntities.Add(dublicategameEntity);
         return dublicategameEntity;
     }
 

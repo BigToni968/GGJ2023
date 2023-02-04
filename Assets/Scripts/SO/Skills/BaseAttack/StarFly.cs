@@ -25,9 +25,9 @@ namespace Game.Data
             public override void Init()
             {
                 base.Init();
-                Damage = new SetStat(new Stat(_damage));
-                Speed = new SetStat(new Stat(_speed));
-                Lifetime = new SetStat(new Stat(_lifetime));
+                Damage = new SetStat(_damage);
+                Speed = new SetStat(_speed);
+                Lifetime = new SetStat(_lifetime);
             }
         }
 

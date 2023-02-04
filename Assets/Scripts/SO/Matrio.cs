@@ -19,7 +19,7 @@ namespace Game.Data
             public override void Init()
             {
                 base.Init();
-                Health = new SetStat(new Stat(_health));
+                Health = new SetStat(_health);
             }
         }
 

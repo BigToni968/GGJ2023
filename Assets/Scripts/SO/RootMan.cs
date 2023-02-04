@@ -30,9 +30,9 @@ namespace Game.Data
             public override void Init()
             {
                 base.Init();
-                Health = new SetStat(new Stat(_health));
-                Speed = new SetStat(new Stat(_speed));
-                Score = new SetStat(new Stat(_score));
+                Health = new SetStat(_health);
+                Speed = new SetStat(_speed);
+                Score = new SetStat(_score);
             }
         }
 

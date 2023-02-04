@@ -36,7 +36,7 @@ public class Enemy : MonoEntity, IMove, IDamage, IDead
 
     public int Get(float Damage)
     {
-        _data.Parammeters.Health.Add(new Stat(-Damage));
+        _data.Parammeters.Health.Value = -Damage;
 
         if (!_data.Parammeters.IsAlive)
         {

@@ -23,8 +23,8 @@ namespace Game.Data
             public override void Init()
             {
                 base.Init();
-                Damage = new SetStat(new Stat(_damage));
-                Lenght = new SetStat(new Stat(_lenght));
+                Damage = new SetStat(_damage);
+                Lenght = new SetStat(_lenght);
             }
         }
 

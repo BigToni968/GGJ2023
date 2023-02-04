@@ -26,9 +26,9 @@ namespace Game.Data
             public override void Init()
             {
                 base.Init();
-                Health = new SetStat(new Stat(_health));
-                Speed = new SetStat(new Stat(_speed));
-                PriceDead = new SetStat(new Stat(_priceDead));
+                Health = new SetStat(_health);
+                Speed = new SetStat(_speed);
+                PriceDead = new SetStat(_priceDead);
             }
         }
 

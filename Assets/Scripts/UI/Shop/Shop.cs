@@ -27,9 +27,14 @@ namespace Game.View
                 if (hero.GameEntity.GEType == GEType.Hero)
                 {
                     Data.RootMan rootMan = hero.GameEntity as Data.RootMan;
-                    Skills.SetSkills setSkills = _loader.Sources.GetGameSkills.Find(buySkill.Item);
-                    setSkills.Init(hero);
-                    rootMan.Skills.Add(setSkills.Clone() as Skills.SetSkills);
+                    if (rootMan.Parammeters.Score.Value >= buySkill.Price)
+                    {
+                        rootMan.Parammeters.Score.Value -= buySkill.Price;
+                        Debug.Log(rootMan.Parammeters.Score.Value);
+                        Skills.SetSkills setSkills = _loader.Sources.GetGameSkills.Find(buySkill.Item);
+                        setSkills.Init(hero);
+                        rootMan.Skills.Add(setSkills.Clone() as Skills.SetSkills);
+                    }
                 }
         }
 

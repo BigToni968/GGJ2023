@@ -18,7 +18,7 @@ public class Matrio : MonoEntity, IDamage
 
     public int Get(float Damage)
     {
-        _data.Parammeters.Health.Add(new Stat(-Damage));
+        _data.Parammeters.Health.Value = -Damage;
         return 0;
     }
 }
