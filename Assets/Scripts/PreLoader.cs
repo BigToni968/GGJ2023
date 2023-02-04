@@ -14,7 +14,7 @@ public class PreLoader : MonoBehaviour
     public event Action Init;
     public Sources Sources => _sources;
 
-    public IEnumerable GetGameEntity => _data.GameEntities;
+    public GameEntity GetHero => _data.Hero;
     public IEnumerable GetMonoEntity => _entities;
 
     private void Start()
@@ -24,14 +24,13 @@ public class PreLoader : MonoBehaviour
 
     private void OnInit()
     {
-        if (_data.GameEntities.Count == 0)
-        {
+        if (_data.Hero == null)
             EntityInit(_gameEntity, _entities);
-        }
         else
         {
-            for (int i = 0; i < _data.GameEntities.Count; i++)
-                if (i < _entities.Length) LoadEntity(_data.GameEntities[i], _entities[i]);
+            LoadEntity(_data.Hero, _entities[0]);
+            for (int i = 0; i < _gameEntity.Length; i++)
+                EntityInit(_gameEntity[i], _entities[i + 1]);
         }
 
         Init?.Invoke();
@@ -60,28 +59,20 @@ public class PreLoader : MonoBehaviour
 
         dublicategameEntity.Owner = monoEntity;
         dublicategameEntity.Init();
-        Game.Data.RootMan hero = dublicategameEntity as Game.Data.RootMan;
-        hero.Parammeters.Score.Value = -hero.Parammeters.Score.Value;
-        hero.Parammeters.Score.Value = -_data.Score;
         monoEntity.Init(dublicategameEntity);
-        _data.GameEntities.Add(dublicategameEntity);
+        if (dublicategameEntity.GEType == GEType.Hero)
+            _data.Hero = dublicategameEntity;
+
         return dublicategameEntity;
     }
 
     public void LoadEntity(GameEntity entity, MonoEntity monoEntity)
     {
-        entity.Owner = monoEntity;
-        entity.Init();
-        monoEntity.Init(entity);
-    }
-
-    public void Goto()
-    {
-        _data.ResetTrash();
-    }
-
-    public void Exit()
-    {
-        _data.ResetAll();
+        Game.Data.RootMan hero = entity as Game.Data.RootMan;
+        hero.Parammeters.Score.Value = -hero.Parammeters.Score.Value;
+        hero.Parammeters.Score.Value = -_data.Score;
+        hero.Owner = monoEntity;
+        hero.Init();
+        monoEntity.Init(hero);
     }
 }

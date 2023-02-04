@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e8783b846658324ea823fa7d113f022, type: 3}
   m_Name: New Game Session Data
   m_EditorClassIdentifier: 
-  GameEntities: []
+  _music: 0.5
+  _sound: 0.5

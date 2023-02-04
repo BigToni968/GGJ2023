@@ -29,7 +29,7 @@ namespace Game.View
                     Data.RootMan rootMan = hero.GameEntity as Data.RootMan;
                     if (rootMan.Parammeters.Score.Value >= buySkill.Price)
                     {
-                        rootMan.Parammeters.Score.Value -= buySkill.Price;
+                        rootMan.Parammeters.Score.Value = -buySkill.Price;
                         Debug.Log(rootMan.Parammeters.Score.Value);
                         Skills.SetSkills setSkills = _loader.Sources.GetGameSkills.Find(buySkill.Item);
                         setSkills.Init(hero);

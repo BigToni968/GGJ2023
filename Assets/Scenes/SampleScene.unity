@@ -1035,7 +1035,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 09cc1143763dd5b4b94ff1a093aa0d63, type: 2}
   _sources: {fileID: 11400000, guid: cec0cc91e32b927408597e6e13b22bb5, type: 2}
-  _gameEntity: []
+  _gameEntity:
+  - {fileID: 11400000, guid: 46c667dbecb62ee4caef7ae6c1d6c930, type: 2}
   _entities:
   - {fileID: 256660046}
   - {fileID: 1175791843}

@@ -37,8 +37,7 @@ namespace Game.View
         {
             _buttons ??= new List<SkullButton>();
 
-            foreach (GameEntity entity in _preLoader.GetGameEntity)
-                if (entity.GEType == GEType.Hero) _hero = entity as Data.RootMan;
+            _hero = _preLoader.GetHero as Data.RootMan;
 
             _hero.Skills.Update += UpdateSkillsHero;
 
@@ -79,12 +78,8 @@ namespace Game.View
 
         private void SelectSkullCharacter(GEType type, Data.Skill skill)
         {
-            foreach (GameEntity entity in _preLoader.GetGameEntity)
-                if (entity.GEType == GEType.Hero)
-                {
-                    Data.RootMan hero = entity as Data.RootMan;
-                    hero.Skills.Select(skill.GetType());
-                }
+            Data.RootMan hero = _hero as Data.RootMan;
+            hero.Skills.Select(skill.GetType());
         }
     }
 }
