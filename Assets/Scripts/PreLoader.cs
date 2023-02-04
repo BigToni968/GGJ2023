@@ -30,7 +30,7 @@ public class PreLoader : MonoBehaviour
         {
             LoadEntity(_data.Hero, _entities[0]);
             for (int i = 0; i < _gameEntity.Length; i++)
-                EntityInit(_gameEntity[i], _entities[i + 1]);
+                EntityInit(_gameEntity[i], _entities.Length > 1 ? _entities[i + 1] : _entities[i]);
         }
 
         Init?.Invoke();

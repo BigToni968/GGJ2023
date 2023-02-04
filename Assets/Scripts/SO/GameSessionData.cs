@@ -18,6 +18,8 @@ namespace Game.Data
 
         public GameEntity Hero { get; set; }
 
+        public bool IsPause { get; set; } = false;
+
         private void OnEnable()
         {
             Music = _music;

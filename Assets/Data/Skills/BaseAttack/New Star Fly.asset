@@ -18,4 +18,4 @@ MonoBehaviour:
   _parameters:
     _damage: 25
     _speed: 1
-    _lifetime: 0
+    _lifetime: 2

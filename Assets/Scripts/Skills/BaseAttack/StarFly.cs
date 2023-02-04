@@ -15,8 +15,6 @@ namespace Game.Gameplay
             base.Init();
             Body.transform.parent = null;
             _parameters = Stats as Data.StarFly.Parameters;
-            //_direcion = Owner.GetComponent<IRotate>().Direction;
-            //_direcion = Vector2.right * _direcion * _parameters.Speed.Value;
             _direcion = Vector2.right * _parameters.Speed.Value;
 
             Body.AddComponent<SpriteRenderer>().sprite = Sprite;
@@ -32,10 +30,18 @@ namespace Game.Gameplay
 
         private void OnTriggerEnter(Collider2D collider, ColliderSignal type)
         {
-            //Debug.Log(collider.name);
+            if (type == ColliderSignal.ExitTrigger) return;
+
             if (collider.TryGetComponent<IDamage>(out IDamage target))
             {
-                //if (target.Owner == Owner) Debug.Log("Это я.");
+                if (Owner == target.Owner) return;
+
+                if (Owner.GameEntity.GEType == GEType.Hero)
+                {
+                    Data.RootMan hero = Owner.GameEntity as Data.RootMan;
+                    hero.Parammeters.Score.Value = target.Get(_parameters.Damage.Value);
+                    Destroy();
+                }
             }
         }
 

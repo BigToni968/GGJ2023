@@ -16,7 +16,7 @@ MonoBehaviour:
     _skills:
     - _skill: {fileID: 11400000, guid: 7b63032b19534254dad1626d9a92d2a4, type: 2}
       _count: 1
-      _max: 5
+      _max: 10
       _delay: 5
   _entityData:
     _gameEntity:
