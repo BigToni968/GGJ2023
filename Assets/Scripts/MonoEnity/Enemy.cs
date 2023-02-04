@@ -1,6 +1,7 @@
 using EnemyData = Game.Data.Enemy;
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 public class Enemy : MonoEntity, IMove, IDamage, IDead
 {
@@ -14,6 +15,7 @@ public class Enemy : MonoEntity, IMove, IDamage, IDead
     public MonoEntity Owner => this;
 
     public bool IsDead => !_data.Parammeters.IsAlive;
+    private float timer = 0;
 
     public override void Init(GameEntity gameEntity)
     {
@@ -24,14 +26,40 @@ public class Enemy : MonoEntity, IMove, IDamage, IDead
 
     private void Update()
     {
-
+        Think();
     }
-
-    private void Move()
+    virtual public void Think()
+    {
+        Debug.DrawRay(transform.position, Vector2.left * _data.Parammeters.AttackRange.Value, Color.red);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.left, _data.Parammeters.AttackRange.Value);
+        List<GameObject> targets = new List<GameObject>();
+        foreach(var hit in hits)
+        {
+            if (hit.collider.CompareTag("Obstacle"))
+                targets.Add(hit.collider.gameObject);
+        }
+        if (targets.Count == 0)
+        {
+            timer = _data.Parammeters.AttackFrequency.Value;
+            Move();
+        }
+        else
+        {
+            timer -= Time.deltaTime;
+            Move(0);
+            if(timer <= 0)
+            {
+                foreach (var item in targets)
+                {
+                    //item.GetComponent<...>().Get(_data.Parammeters.Damage);
+                }
+            }
+        }
+    }
+    private void Move(float mult = 1)
     {
         if (_data == null) return;
-        To?.Invoke(Vector2.left * _data.Parammeters.Speed.Value * Time.deltaTime);
-
+        To?.Invoke(Vector2.left * _data.Parammeters.Speed.Value * mult);
     }
 
     public int Get(float Damage)

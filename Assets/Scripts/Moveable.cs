@@ -23,8 +23,8 @@ public class Moveable : MonoBehaviour
 
     private void Move(Vector2 direction)
     {
-        Vector2 velocity = Vector2.zero;
-        velocity.Set(direction.x, direction.y);
+        //Vector2 velocity = Vector2.zero;
+        //velocity.Set(direction.x, direction.y);
         _rb.velocity = direction;
     }
 }
