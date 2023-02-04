@@ -26,6 +26,8 @@ public class RootMan : MonoEntity, IMove, IRotate, ISkullAttack, IUniqueAttack, 
 
     private void Update()
     {
+        if (_data == null) return;
+
         if (_data.Parammeters.IsAlive)
         {
             Move();
@@ -46,7 +48,7 @@ public class RootMan : MonoEntity, IMove, IRotate, ISkullAttack, IUniqueAttack, 
         if (direction.x != 0f)
         {
             Direction = direction.x < 0f ? Vector2.left : Vector2.right;
-            //Side?.Invoke(Direction);
+            Side?.Invoke(Direction);
         }
     }
 

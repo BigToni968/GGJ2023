@@ -8,6 +8,11 @@ namespace Game.Data
     {
         public List<GameEntity> GameEntities = new List<GameEntity>();
 
+        private void OnDisable()
+        {
+            ResetAll();
+        }
+
         public void ResetAll()
         {
             GameEntities.Clear();

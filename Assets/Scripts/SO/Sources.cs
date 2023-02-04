@@ -41,7 +41,9 @@ namespace Game.Data
             [SerializeField] private GameEntity[] _gameEntity;
 
             public IEnumerable GetEntity => _gameEntity;
+            public GameEntity[] GetArrayEntity => _gameEntity;
             public int Count => _gameEntity.Length;
+
         }
     }
 }

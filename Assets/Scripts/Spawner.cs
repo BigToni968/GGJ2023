@@ -1,101 +1,91 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class Spawner : MonoBehaviour
+public class Spawner : MonoBehaviour, IWaveCallback
 {
-    [SerializeField]
-    List<QueueMember> queue;
     [SerializeField]
     PreLoader loader;
+    [SerializeField] private Game.Data.Wave _waveData;
+    [SerializeField] private float _radiosGizmo;
 
-    List<List<GameObject>> waves = new List<List<GameObject>>();
+    public event Action<WaveType> CallBack;
 
-    private float timer = -1;
-    private float waveTimer = 0;
-    private int wave = -1;
-    private int count = -1;
+    private WaitForSeconds _wait;
 
-    private MonoEntity obj;
-    private int maxCount;
-    private float delay;
-    private float interval;
-
-    private List<MonoEntity> pool;
-    private void Start()
+    private void OnEnable()
     {
-        pool = loader.GetPoolEntity;
-        foreach(var entity in pool)
+        if (loader != null)
+            loader.Init += Init;
+    }
+
+    private void OnDisable()
+    {
+        if (loader != null)
+            loader.Init -= Init;
+    }
+
+    private void Init()
+    {
+        _wait ??= new WaitForSeconds(_waveData.BetweenSpawnsTime);
+        StartCoroutine(SpawnTask());
+    }
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _radiosGizmo);
+    }
+#endif
+
+    private IEnumerator SpawnTask()
+    {
+        yield return new WaitForSeconds(_waveData.DoStartTime);
+
+        CallBack?.Invoke(WaveType.StartSpawnBaseEnemy);
+
+        for (int i = 0; i < _waveData.NumberEnemy; i++)
         {
-            Instantiate(entity);
+            InitEnemy(_waveData.GetGameEntity, _waveData.GetMonoEntity);
+            yield return _wait;
         }
-    }
-    private MonoEntity PullEnemy(EnemyTypes type)
-    {
-        return null;
-    }
-    private void NewStep()
-    {
-        waves.Add(new List<GameObject>());
-        obj = PullEnemy(queue[wave].GetObject());
-        maxCount = queue[wave].GetCount();
-        delay = queue[wave].GetDelay();
-        interval = queue[wave].GetInterval();
 
-        count = maxCount;
-        timer = delay;
-        waveTimer = 0;
-    }
-    private void Update()
-    {
-        if (wave > queue.Count) return;
+        CallBack?.Invoke(WaveType.FinishSpawnBaseEnemy);
 
-        try
+        yield return new WaitForSeconds(_waveData.DoStartTime + _waveData.BetweenSpawnsTime);
+
+        CallBack?.Invoke(WaveType.StartSpawnBossEnemy);
+
+        if (_waveData.GetBossGameEntity != null && _waveData.GetBossMonoEntity != null)
         {
-            if (timer < 0)
-            {
-                wave++;
-                NewStep();
-            }
+            IDead boss = InitEnemy(_waveData.GetBossGameEntity, _waveData.GetBossMonoEntity) as IDead;
 
-            if (waveTimer < 0 && count > 0)
-            {
-                waveTimer = interval;
-                waves[wave].Add(Instantiate(obj.gameObject));
-                count--;
-            }
-
-            waveTimer -= Time.deltaTime;
-            timer -= Time.deltaTime;
+            while (boss.IsDead == false)
+                yield return _wait;
         }
-        catch { }
 
+        CallBack?.Invoke(WaveType.StartSpawnBossEnemy);
+
+        yield return null;
+    }
+
+    private GameEntity InitEnemy(GameEntity data, MonoEntity body)
+    {
+        MonoEntity enemy = Instantiate(body);
+        enemy.transform.position = transform.position;
+        return loader.EntityInit(data, enemy);
     }
 }
 
-
-public enum EnemyTypes { basic }
-
-[Serializable]
-public class QueueMember
+public enum WaveType
 {
-    //[SerializeField]
-    //private MonoEntity obj;
-    [SerializeField]
-    private EnemyTypes enemyType;
-    [SerializeField]
-    private int count;
-    [SerializeField]
-    private float spawnInterval;
-    [SerializeField]
-    private float delay;
-    [SerializeField]
-    private float delayLoose;
-
-    public EnemyTypes GetObject() { return enemyType; }
-    public int GetCount() { return count; }
-    public float GetInterval() { return spawnInterval; }
-    public float GetDelay() { return delay; }
+    StartSpawnBaseEnemy,
+    FinishSpawnBaseEnemy,
+    StartSpawnBossEnemy,
+    FinishSpawnBossEnemy
 }
 
+public interface IWaveCallback
+{
+    public event Action<WaveType> CallBack;
+}

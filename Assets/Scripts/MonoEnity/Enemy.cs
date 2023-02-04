@@ -2,14 +2,18 @@ using EnemyData = Game.Data.Enemy;
 using UnityEngine;
 using System;
 
-public class Enemy : MonoEntity, IMove
+public class Enemy : MonoEntity, IMove, IDamage, IDead
 {
     [SerializeField] private SpriteRenderer _sprite;
 
     public event Action<Vector2> To;
-    public event Action<Vector2> Side;
+    public event Action Dead;
 
     private EnemyData _data;
+
+    public MonoEntity Owner => this;
+
+    public bool IsDead => !_data.Parammeters.IsAlive;
 
     public override void Init(GameEntity gameEntity)
     {
@@ -18,32 +22,27 @@ public class Enemy : MonoEntity, IMove
         _data = gameEntity as EnemyData;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (_data.Parammeters.IsAlive)
-        {
-            Move();
 
-            //if (Input.GetMouseButton(0))
-            //{
-            //    foreach (Skills.SetSkills setSkill in _data.Skills.Get)
-            //    {
-            //        setSkill.Skill.Execute();
-            //        return;
-            //    }
-            //}
-        }
     }
 
     private void Move()
     {
-        Vector2 direction = Vector2.zero;
         if (_data == null) return;
-        direction.x = Time.deltaTime * -1 * _data.Parammeters.Speed.Value;
-        direction.y = transform.position.y;
-        To?.Invoke(direction);
+        To?.Invoke(Vector2.left * _data.Parammeters.Speed.Value * Time.deltaTime);
 
-        if (direction.x != 0f)
-            Side?.Invoke(direction.x < 0f ? Vector2.left : Vector2.right);
+    }
+
+    public int Get(float Damage)
+    {
+        _data.Parammeters.Health.Add(new Stat(-Damage));
+
+        if (!_data.Parammeters.IsAlive)
+        {
+            Dead?.Invoke();
+            return Convert.ToInt32(_data.Parammeters.PriceDead.Value);
+        }
+        return 0;
     }
 }

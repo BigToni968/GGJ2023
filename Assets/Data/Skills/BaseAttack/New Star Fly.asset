@@ -16,6 +16,6 @@ MonoBehaviour:
   _name: StarFly
   _description: Base attack hero!
   _parameters:
-    _damage: 1
+    _damage: 25
     _speed: 1
-    _timeLife: 3
+    _lifetime: 0

@@ -16,17 +16,19 @@ namespace Game.Data
         {
             [SerializeField] private float _health;
             [SerializeField] private float _speed;
-
+            [SerializeField] private int _priceDead;
             public override bool IsAlive => Health.Value > 0f;
 
             public SetStat Health { get; private set; }
             public SetStat Speed { get; private set; }
+            public SetStat PriceDead { get; private set; }
 
             public override void Init()
             {
                 base.Init();
                 Health = new SetStat(new Stat(_health));
                 Speed = new SetStat(new Stat(_speed));
+                PriceDead = new SetStat(new Stat(_priceDead));
             }
         }
 
