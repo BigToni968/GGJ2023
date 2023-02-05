@@ -28,6 +28,12 @@ namespace Game.View
             _music.onValueChanged.AddListener(SetMusic);
             _sound.onValueChanged.AddListener(SetSound);
             _fullScreen.onValueChanged.AddListener(SetScreenMode);
+
+            if (_preLoader.Data != null)
+            {
+                _music.value = _preLoader.Data.Music;
+                SetMusic(_preLoader.Data.Music);
+            }
         }
 
         private void OnDestroy()

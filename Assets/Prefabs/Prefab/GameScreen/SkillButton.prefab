@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9723631e8f453145bf98be941e7060e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sprite: {fileID: 728826700888585494}
   _button: {fileID: 6770830095621074194}
   _text: {fileID: 6770830096109539893}
 --- !u!1 &6770830096109539895

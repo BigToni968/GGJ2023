@@ -15,7 +15,7 @@ MonoBehaviour:
   _sprite: {fileID: -7999539560890616976, guid: 13b417016d045bf46ab02d1cde033648, type: 3}
   _GEType: 2
   _parameters:
-    _score: 10
+    _score: 100
     _health: 100
     _speed: 10
   _attack:

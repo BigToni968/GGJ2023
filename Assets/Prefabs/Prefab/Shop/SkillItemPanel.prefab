@@ -947,6 +947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6a53e02657cccf46bc9faa21cf9fc53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sprite: {fileID: 2920306920993572640}
   _name: {fileID: 8185269508687179987}
   _description: {fileID: 0}
   _price: {fileID: 8185269508521575498}

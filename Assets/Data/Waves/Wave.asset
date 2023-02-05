@@ -17,5 +17,5 @@ MonoBehaviour:
   _bossGameEntity: {fileID: 11400000, guid: faf38993a508f814c83349d770a4c19a, type: 2}
   _bossMonoEntity: {fileID: 1420095845447341068, guid: d890b6ef5e080d34cba111311304da0d, type: 3}
   _doStartTime: 1
-  _betweenSpawnsTime: 1
-  _numberEnemy: 1
+  _betweenSpawnsTime: 2
+  _numberEnemy: 20

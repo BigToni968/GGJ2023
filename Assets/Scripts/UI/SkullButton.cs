@@ -6,6 +6,7 @@ using TMPro;
 
 public class SkullButton : MonoBehaviour
 {
+    [SerializeField] private Image _sprite;
     [SerializeField] private Button _button;
     [SerializeField] private TextMeshProUGUI _text;
 
@@ -19,6 +20,7 @@ public class SkullButton : MonoBehaviour
     {
         _root = gameEntity as Game.Data.RootMan;
         _skill = skill;
+        _sprite.sprite = _skill.Sprite;
         _button.onClick.AddListener(OnClick);
 
         foreach (Skills.SetSkills shell in _root.Skills.Get)

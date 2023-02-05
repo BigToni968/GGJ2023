@@ -11,10 +11,10 @@ public class MessEndGame : MonoBehaviour
     {
         _self.SetActive(true);
 
-        if (string.IsNullOrEmpty(title))
+        if (!string.IsNullOrEmpty(title))
             _title.SetText(title);
 
-        if (string.IsNullOrEmpty(text))
+        if (!string.IsNullOrEmpty(text))
             _text.SetText(text);
     }
 }

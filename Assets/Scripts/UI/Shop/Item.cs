@@ -8,6 +8,7 @@ namespace Game.View
 {
     public class Item : MonoBehaviour
     {
+        [SerializeField] private Image _sprite;
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private TextMeshProUGUI _description;
         [SerializeField] private TextMeshProUGUI _price;
@@ -20,6 +21,7 @@ namespace Game.View
 
         public void Init(Data.Shop.ShopItem<Skill> item)
         {
+            _sprite.sprite = item.Item.Sprite;
             _name.SetText($" {item.Item.Name}");
             //_description.SetText($" {item.Item.Description}");
             _price.SetText($" {item.Price}");

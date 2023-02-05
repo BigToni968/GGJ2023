@@ -49,6 +49,8 @@ namespace Game.View
         {
             if (type == GEType.Enemy)
                 _mess.Call("Win!", null);
+            else
+                _mess.Call(null, null);
         }
     }
 }
