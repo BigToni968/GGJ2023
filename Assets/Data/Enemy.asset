@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 949b7a28d960ab14597f6f7ece77f2aa, type: 3}
-  m_Name: New Enemy
+  m_Name: Enemy
   m_EditorClassIdentifier: 
   _sprite: {fileID: 4869065183075766732, guid: 13b417016d045bf46ab02d1cde033648, type: 3}
   _GEType: 3

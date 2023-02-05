@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 949b7a28d960ab14597f6f7ece77f2aa, type: 3}
-  m_Name: Boss
+  m_Name: EnemTwo
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 1538016293040315012, guid: 13b417016d045bf46ab02d1cde033648, type: 3}
+  _sprite: {fileID: 4490723236575979493, guid: 13b417016d045bf46ab02d1cde033648, type: 3}
   _GEType: 3
   _parameters:
-    _health: 1000
-    _speed: 50
+    _health: 100
+    _speed: 100
     _priceDead: 25
-    _attackRange: 2
+    _attackRange: 1
     _attackFrequency: 1
-    _damage: 10
+    _damage: 25
   _skills:
     _skills: []
