@@ -2,14 +2,21 @@ using System.Collections;
 using UnityEngine;
 using System;
 
-public class Spawner : MonoBehaviour, IWaveCallback
+public class Spawner : MonoBehaviour, IWaveCallback, IDead
 {
     [SerializeField]
     PreLoader loader;
     [SerializeField] private Game.Data.Wave _waveData;
     [SerializeField] private float _radiosGizmo;
 
+    private Queue _deadList;
+
+    public int Max => _waveData.GetBossGameEntity == null ? _waveData.NumberEnemy : _waveData.NumberEnemy + 1;
+
+    public bool IsDead => false;
+
     public event Action<WaveType> CallBack;
+    public event Action Dead;
 
     private WaitForSeconds _wait;
 
@@ -28,6 +35,7 @@ public class Spawner : MonoBehaviour, IWaveCallback
     private void Init()
     {
         _wait ??= new WaitForSeconds(_waveData.BetweenSpawnsTime);
+        _deadList = new Queue(Max);
         StartCoroutine(SpawnTask());
     }
 #if UNITY_EDITOR
@@ -46,7 +54,10 @@ public class Spawner : MonoBehaviour, IWaveCallback
 
         for (int i = 0; i < _waveData.NumberEnemy; i++)
         {
-            InitEnemy(_waveData.GetGameEntity, _waveData.GetMonoEntity);
+            GameEntity eneme = InitEnemy(_waveData.GetGameEntity, _waveData.GetMonoEntity);
+            IDead dead = (eneme.Owner as IDead);
+            dead.Dead += DeadEnemy;
+            _deadList.Enqueue(dead);
             yield return _wait;
         }
 
@@ -59,7 +70,8 @@ public class Spawner : MonoBehaviour, IWaveCallback
         if (_waveData.GetBossGameEntity != null && _waveData.GetBossMonoEntity != null)
         {
             IDead boss = InitEnemy(_waveData.GetBossGameEntity, _waveData.GetBossMonoEntity).Owner as IDead;
-
+            _deadList.Enqueue(boss);
+            CallBack?.Invoke(WaveType.SpawnEnemy);
             while (boss.IsDead == false)
                 yield return _wait;
         }
@@ -67,6 +79,13 @@ public class Spawner : MonoBehaviour, IWaveCallback
         CallBack?.Invoke(WaveType.StartSpawnBossEnemy);
 
         yield return null;
+    }
+
+    private void DeadEnemy()
+    {
+        IDead dead = _deadList.Dequeue() as IDead;
+        dead.Dead -= DeadEnemy;
+        Dead?.Invoke();
     }
 
     private GameEntity InitEnemy(GameEntity data, MonoEntity body)
@@ -81,6 +100,7 @@ public enum WaveType
 {
     StartSpawnBaseEnemy,
     FinishSpawnBaseEnemy,
+    SpawnEnemy,
     StartSpawnBossEnemy,
     FinishSpawnBossEnemy
 }

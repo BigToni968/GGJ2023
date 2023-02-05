@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c2f99bb38b167e459568be475c6a723, type: 3}
   m_Name: Wave 2
   m_EditorClassIdentifier: 
-  gameEntity: {fileID: 11400000, guid: c572ab7ef30bdaa4eb28882ac574e8bf, type: 2}
-  monoEntity: {fileID: 5182340569707838330, guid: 52397dc8b4723a94996a21486be8274c, type: 3}
+  gameEntity: {fileID: 11400000, guid: 32c2274dcaa6d9c438cf62234def68a2, type: 2}
+  monoEntity: {fileID: 5182340569707838330, guid: 8078eceb9aa082a498e76c30c6bd1d5d, type: 3}
   _bossGameEntity: {fileID: 11400000, guid: faf38993a508f814c83349d770a4c19a, type: 2}
   _bossMonoEntity: {fileID: 1420095845447341068, guid: d890b6ef5e080d34cba111311304da0d, type: 3}
   _doStartTime: 1
