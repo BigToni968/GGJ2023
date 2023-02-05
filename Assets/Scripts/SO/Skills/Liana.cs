@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace Game.Data
 {
-    [CreateAssetMenu(menuName = "Game/Data/Skills/" + nameof(Whiplash))]
-    public class Whiplash : Skill
+    [CreateAssetMenu(menuName = "Game/Data/Skills/" + nameof(Liana))]
+    public class Liana : Skill
     {
         [SerializeField] private Parameters _parameters;
 
-        public override BaseSkill BaseSkill { get; set; } = new Gameplay.Whiplash();
+        public override BaseSkill BaseSkill { get; set; } = new Gameplay.Liana();
 
         public Parameters Parammeters => _parameters;
 

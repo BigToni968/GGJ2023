@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 949b7a28d960ab14597f6f7ece77f2aa, type: 3}
   m_Name: New Enemy
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: dba8426d183870045a3d663766588a1f, type: 3}
+  _sprite: {fileID: 4869065183075766732, guid: 13b417016d045bf46ab02d1cde033648, type: 3}
   _GEType: 3
   _parameters:
-    _health: 150
+    _health: 100
     _speed: 100
-    _priceDead: 1
+    _priceDead: 25
+    _attackRange: 1
+    _attackFrequency: 1
+    _damage: 25
   _skills:
     _skills: []

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using Game.Data;
 
@@ -9,13 +7,14 @@ namespace Game.View
     {
         [SerializeField] private PreLoader _loader;
         [SerializeField] private Data.Shop _data;
+        [SerializeField] private Transform _content;
         [SerializeField] private Item _prefab;
 
         public void Init()
         {
             foreach (Data.Shop.Item<Data.Shop.ShopItem<Skill>> item in _data.GetBuy.GetSkills.GetItems)
             {
-                Item tempItem = Instantiate(_prefab, transform);
+                Item tempItem = Instantiate(_prefab, _content);
                 tempItem.Init(item.GetItem);
                 tempItem.Buy += Buy;
             }

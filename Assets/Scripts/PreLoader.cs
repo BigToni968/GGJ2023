@@ -13,6 +13,7 @@ public class PreLoader : MonoBehaviour
 
     public event Action Init;
     public Sources Sources => _sources;
+    public GameSessionData Data => _data;
 
     public GameEntity GetHero => _data.Hero;
     public IEnumerable GetMonoEntity => _entities;

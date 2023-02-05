@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameEntity: {fileID: 11400000, guid: c572ab7ef30bdaa4eb28882ac574e8bf, type: 2}
   monoEntity: {fileID: 5182340569707838330, guid: 52397dc8b4723a94996a21486be8274c, type: 3}
-  _bossGameEntity: {fileID: 0}
-  _bossMonoEntity: {fileID: 0}
+  _bossGameEntity: {fileID: 11400000, guid: faf38993a508f814c83349d770a4c19a, type: 2}
+  _bossMonoEntity: {fileID: 1420095845447341068, guid: d890b6ef5e080d34cba111311304da0d, type: 3}
   _doStartTime: 1
-  _betweenSpawnsTime: 2
-  _numberEnemy: 5
+  _betweenSpawnsTime: 1
+  _numberEnemy: 1

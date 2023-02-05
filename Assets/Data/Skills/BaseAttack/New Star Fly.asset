@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c2971d50ee0f3547958c44fc3f6b3d6, type: 3}
   m_Name: New Star Fly
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 3494dc956dfd7174abc07060940a2848, type: 3}
+  _sprite: {fileID: 2618065535983520919, guid: 3268e08ca1f91254cb3e2c098711d6f3, type: 3}
   _name: StarFly
   _description: Base attack hero!
   _parameters:
     _damage: 25
-    _speed: 1
-    _lifetime: 2
+    _speed: 10
+    _lifetime: 1

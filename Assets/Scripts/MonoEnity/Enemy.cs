@@ -1,15 +1,17 @@
 using EnemyData = Game.Data.Enemy;
+using System.Threading.Tasks;
 using UnityEngine;
 using System.Linq;
 using System;
-using System.Threading.Tasks;
 
-public class Enemy : MonoEntity, IMove, IDamage, IDead
+public class Enemy : MonoEntity, IMove, IDamage, IDead, IAnimate
 {
     [SerializeField] private SpriteRenderer _sprite;
 
     public event Action<Vector2> To;
     public event Action Dead;
+    public event Action<AnimaionType> Play;
+    public event Action<int> PlaySkill;
 
     private EnemyData _data;
     private ModeEnemy _mode;
@@ -37,6 +39,7 @@ public class Enemy : MonoEntity, IMove, IDamage, IDead
         {
             case ModeEnemy.Move:
                 Move(Vector2.left);
+                Play(AnimaionType.Move);
                 if (_target.Damage == null) _mode = ModeEnemy.FindTarget;
                 break;
 
@@ -46,6 +49,7 @@ public class Enemy : MonoEntity, IMove, IDamage, IDead
                 break;
 
             case ModeEnemy.Attack:
+                PlaySkill(1);
                 Move(Vector2.zero);
                 Attack();
                 _mode = ModeEnemy.Battle;

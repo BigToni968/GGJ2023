@@ -18,8 +18,8 @@ public class Skills
     {
         if (_skills.Contains(setSkills))
         {
-            SetSkills skills = _skills.Find(x => setSkills == x);
-            skills.SetSkill.Value = +1;
+            foreach (SetSkills skills in _skills)
+                skills.SetSkill.Value = 1;
             return;
         }
 
@@ -96,8 +96,9 @@ public class SetSkill
 
     private void ReValue(int value)
     {
-        _value = Mathf.Clamp(_value + value, 0, Max);
-        Count?.Invoke(value);
+        _value += value;
+        _value = Mathf.Clamp(_value, 0, Max);
+        Count?.Invoke(_value);
     }
 
     public SetSkill(Skill skill, int value) : this(skill, value, value) { }
@@ -140,7 +141,7 @@ public class SetSkill
     {
         return skill switch
         {
-            Whiplash whiplash => whiplash.Parammeters,
+            Liana whiplash => whiplash.Parammeters,
             StarFly starFly => starFly.Parammeters,
             _ => null
         };

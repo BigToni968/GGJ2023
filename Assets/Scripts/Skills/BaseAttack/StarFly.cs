@@ -24,7 +24,6 @@ namespace Game.Gameplay
 
             box.autoTiling = true;
             box.isTrigger = true;
-            Body.transform.localScale = Body.transform.localScale * 10;
             Timer();
         }
 

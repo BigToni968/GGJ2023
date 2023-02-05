@@ -1,17 +1,16 @@
-using System.Collections.Generic;
-using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 using Game.Data;
 using System;
+using TMPro;
 
 namespace Game.View
 {
     public class Item : MonoBehaviour
     {
-        [SerializeField] private Text _name;
-        [SerializeField] private Text _description;
-        [SerializeField] private Text _price;
+        [SerializeField] private TextMeshProUGUI _name;
+        [SerializeField] private TextMeshProUGUI _description;
+        [SerializeField] private TextMeshProUGUI _price;
         [SerializeField] private Button _buy;
 
         public event Action<Data.Shop.ShopItem<Skill>> Buy;
@@ -21,9 +20,9 @@ namespace Game.View
 
         public void Init(Data.Shop.ShopItem<Skill> item)
         {
-            _name.text += $" {item.Item.Name}";
-            _description.text += $" {item.Item.Description}";
-            _price.text += $" {item.Price.ToString()}";
+            _name.SetText($" {item.Item.Name}");
+            //_description.SetText($" {item.Item.Description}");
+            _price.SetText($" {item.Price}");
             GetItem = item;
             _buy.onClick.AddListener(OnClick);
         }

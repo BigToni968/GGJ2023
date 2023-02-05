@@ -58,7 +58,7 @@ public class Spawner : MonoBehaviour, IWaveCallback
 
         if (_waveData.GetBossGameEntity != null && _waveData.GetBossMonoEntity != null)
         {
-            IDead boss = InitEnemy(_waveData.GetBossGameEntity, _waveData.GetBossMonoEntity) as IDead;
+            IDead boss = InitEnemy(_waveData.GetBossGameEntity, _waveData.GetBossMonoEntity).Owner as IDead;
 
             while (boss.IsDead == false)
                 yield return _wait;

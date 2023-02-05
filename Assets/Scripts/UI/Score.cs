@@ -1,14 +1,12 @@
-using System.Collections.Generic;
-using System.Collections;
-using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
 namespace Game.View
 {
     public class Score : MonoBehaviour
     {
         [SerializeField] private PreLoader _preLoader;
-        [SerializeField] private Text _text;
+        [SerializeField] private TextMeshProUGUI _text;
 
         private Data.RootMan.Parameters _parameters;
 
@@ -35,7 +33,7 @@ namespace Game.View
             }
         }
 
-        private void UpdateScore(float val) => _text.text = $"Score : {_parameters.Score.Value}";
+        private void UpdateScore(float val) => _text.SetText($"{_parameters.Score.Value}");
 
         private void OnDestroy()
         {

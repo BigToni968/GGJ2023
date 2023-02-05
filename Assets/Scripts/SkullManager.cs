@@ -7,6 +7,7 @@ namespace Game.View
     {
         [SerializeField] private PreLoader _preLoader;
         [SerializeField] private SkullButton _prefab;
+        [SerializeField] private Transform _content;
         [SerializeField] private int _countButton;
 
         private Data.RootMan _hero;
@@ -43,7 +44,7 @@ namespace Game.View
 
             for (int i = 0; i < _countButton; i++)
             {
-                SkullButton button = Instantiate(_prefab, transform);
+                SkullButton button = Instantiate(_prefab, _content);
                 int j = 0;
 
                 foreach (Skills.SetSkills setSkill in _hero.Skills.Get)

@@ -5,7 +5,7 @@ using System;
 
 namespace Game.Gameplay
 {
-    public class Attack : MonoBehaviour
+    public class Attack : MonoBehaviour, IAnimate
     {
         [SerializeField] private MonoEntity _mono;
         [SerializeField] private int _countActiveSkill;
@@ -16,6 +16,9 @@ namespace Game.Gameplay
 
         private List<Data.Skill> _listActiveSkill;
         private SetSkill _activeUnique;
+
+        public event Action<AnimaionType> Play;
+        public event Action<int> PlaySkill;
 
         private void OnEnable()
         {
@@ -77,9 +80,11 @@ namespace Game.Gameplay
 
         private async void UniqueExecute()
         {
+            Play?.Invoke(AnimaionType.Attack);
             _activeUnique.Execute();
             await Task.Delay(Convert.ToInt32(1000 * _activeUnique.Delay));
             _activeUnique = null;
+            PlaySkill?.Invoke(0);
         }
     }
 }

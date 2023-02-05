@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5c1fa8937eab24b9fdbaffdc6c5ef0, type: 3}
   m_Name: New Root Man
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 662946387f11c5e4ba4ecc4452431f92, type: 3}
+  _sprite: {fileID: -7999539560890616976, guid: 13b417016d045bf46ab02d1cde033648, type: 3}
   _GEType: 2
   _parameters:
     _score: 10
@@ -22,6 +22,6 @@ MonoBehaviour:
     _skill: {fileID: 11400000, guid: 4c68d85316c604f4aa4bd58c387fa970, type: 2}
     _count: 999
     _max: 999
-    _delay: 2
+    _delay: 0.25
   _skills:
     _skills: []
