@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Game.Gameplay
@@ -18,7 +20,7 @@ namespace Game.Gameplay
             Play();
         }
 
-        private void Play()
+        private async void Play()
         {
             _animated.PlaySkill(3);
             Debug.DrawRay(Body.transform.position, Vector2.right * _parameters.Lenght.Value, Color.red);
@@ -28,6 +30,9 @@ namespace Game.Gameplay
                 if (ray.collider.TryGetComponent(out IDamage enemy))
                     if (enemy.Owner.GameEntity.GEType == GEType.Enemy)
                         _owner.Parammeters.Score.Value = enemy.Get(_parameters.Damage.Value);
+
+            await Task.Delay(1000);
+
             _animated.PlaySkill(0);
         }
 

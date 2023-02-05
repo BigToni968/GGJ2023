@@ -1,5 +1,6 @@
 using UnityEngine.UI;
 using UnityEngine;
+using System;
 
 namespace Game.View
 {
@@ -10,7 +11,7 @@ namespace Game.View
         [SerializeField] private Slider _health;
 
         Data.RootMan _root;
-        private int count;
+        private int _count;
 
         private void OnEnable()
         {
@@ -54,13 +55,13 @@ namespace Game.View
 
         public void WaveProggres()
         {
-            count--;
-            SetValue(count);
+            _count--;
+            SetValue(_count);
         }
 
         public void SetParams(float count, float max)
         {
-            count = _health.maxValue = max;
+            _count = Convert.ToInt32(_health.maxValue = max);
             SetValue(count);
         }
 
