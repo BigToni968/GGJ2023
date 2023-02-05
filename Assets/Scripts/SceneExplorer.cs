@@ -8,4 +8,5 @@ public class SceneExplorer : MonoBehaviour
     public void Reload() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     public void Goto(string scene) => SceneManager.LoadScene(scene);
     public void Exit() => Application.Quit();
+    public void Pause(bool pause) => Time.timeScale = pause ? 0 : 1;
 }
