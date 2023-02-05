@@ -22,6 +22,6 @@ MonoBehaviour:
     _skill: {fileID: 11400000, guid: 4c68d85316c604f4aa4bd58c387fa970, type: 2}
     _count: 999
     _max: 999
-    _delay: 0.25
+    _delay: 1.5
   _skills:
     _skills: []
