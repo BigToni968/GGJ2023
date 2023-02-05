@@ -2,7 +2,7 @@ using RootManData = Game.Data.RootMan;
 using UnityEngine;
 using System;
 
-public class RootMan : MonoEntity, IMove, IRotate, ISkullAttack, IUniqueAttack, IDamage
+public class RootMan : MonoEntity, IMove, IRotate, ISkullAttack, IUniqueAttack, IDamage, IDead
 {
     [SerializeField] private SpriteRenderer _sprite;
 
@@ -10,10 +10,13 @@ public class RootMan : MonoEntity, IMove, IRotate, ISkullAttack, IUniqueAttack, 
     public event Action<Vector2> Side;
     public event Action<RootManData> Skull;
     public event Action<Skills.SetSkills> Unique;
+    public event Action Dead;
 
     public Vector2 Direction { get; private set; } = Vector2.right;
 
     public MonoEntity Owner => this;
+
+    public bool IsDead => !_data.Parammeters.IsAlive;
 
     private RootManData _data;
 
@@ -55,6 +58,9 @@ public class RootMan : MonoEntity, IMove, IRotate, ISkullAttack, IUniqueAttack, 
     public int Get(float Damage)
     {
         _data.Parammeters.Health.Value = -Damage;
+        if (!_data.Parammeters.IsAlive)
+            Dead?.Invoke();
+
         return 0;
     }
 }

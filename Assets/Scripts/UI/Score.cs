@@ -30,10 +30,19 @@ namespace Game.View
 
             if (_parameters != null)
             {
-                _parameters.Score.Update += (float val) => _text.text = $"Score : {_parameters.Score.Value}";
+                _parameters.Score.Update += UpdateScore;
                 _parameters.Score.Value = +0;
             }
         }
-    }
 
+        private void UpdateScore(float val) => _text.text = $"Score : {_parameters.Score.Value}";
+
+        private void OnDestroy()
+        {
+            if (_parameters != null)
+            {
+                _parameters.Score.Update -= UpdateScore;
+            }
+        }
+    }
 }
